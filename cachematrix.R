@@ -3,13 +3,53 @@
 
 ## Write a short comment describing this function
 
+## In order to cache the matrix firstly we need to create special entity out of
+## our initial matrix. This entity basically called object, (or class in other
+## object oriented programming languages, like c++). Here we introduced object
+## by function makeCasheMatrix, with number of methods, that we will use in 
+## cacheSolve function. 
+##
+## In the casheSolve function matrix solved and stored in the object.
+## Here in the line 47 actual solving the inverse occurs. and in the line 48
+## we write the solved function to the object, frow which it can be get any
+## time
+
 makeCacheMatrix <- function(x = matrix()) {
 
+  i <- NULL
+  set <- function(matrix) {
+    m <<- matrix
+    i <<- NULL
+    }
+  
+  get <- function() {
+    return(m)
+    }
+  
+  setinve <- function(inverse) {
+    i <<- inverse
+    }
+  
+  getinv <- function() {
+    return(i)
+    }
+  
+  list(set = set, get = get,
+       setinv = setinv,
+       getinv = getinv)
 }
 
 
-## Write a short comment describing this function
-
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  m <- x$getinv()
+        
+  if(is.null(m)) {
+        data <- x$get()
+        m <- solve(data) %*% data
+        x$setinv(m)
+        return(m)
+  } else {
+        return(m)
+          }
+  
 }
